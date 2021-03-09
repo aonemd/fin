@@ -9,10 +9,10 @@ fn unwrap_value(v: &Yaml) -> f32 {
                 match vv {
                     Yaml::String(_vv) => {
                         print!("\t\t {}: ", k.as_str().unwrap());
-                    },
+                    }
                     Yaml::Integer(_vv) => {
                         print!("\t\t {}: ", k.as_str().unwrap());
-                    },
+                    }
                     _ => {
                         println!("\t* {}:", k.as_str().unwrap());
                     }
@@ -20,7 +20,7 @@ fn unwrap_value(v: &Yaml) -> f32 {
                 sum += unwrap_value(vv);
             }
             sum
-        },
+        }
         Yaml::Array(v) => {
             let mut sub_sum = 0.;
             for h in v.iter() {
@@ -28,16 +28,18 @@ fn unwrap_value(v: &Yaml) -> f32 {
             }
             println!("\t= {}", sub_sum);
             sub_sum
-        },
+        }
         Yaml::String(v) => {
-            let tot: f32 = v.split("+").fold(0., |sum, s| sum + s.trim().parse::<f32>().unwrap());
+            let tot: f32 = v
+                .split("+")
+                .fold(0., |sum, s| sum + s.trim().parse::<f32>().unwrap());
             println!("{}", tot);
             tot
-        },
+        }
         Yaml::Integer(v) => {
             println!("{}", v);
             *v as f32
-        },
+        }
         _ => 0.,
     }
 }
