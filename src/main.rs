@@ -1,6 +1,23 @@
 extern crate yaml_rust;
 use yaml_rust::{Yaml, YamlLoader};
 
+fn main() -> Result<(), std::io::Error> {
+    let doc = std::fs::read_to_string("finances.yaml")?;
+    let data = YamlLoader::load_from_str(&doc).unwrap();
+    let doc = &data[0];
+
+    let map = doc.as_hash().unwrap();
+
+    for (k, v) in map.iter() {
+        println!("{}: ", k.as_str().unwrap());
+        let sum = unwrap_value(v);
+        println!("== {}", sum);
+        println!();
+    }
+
+    Ok(())
+}
+
 fn unwrap_value(v: &Yaml) -> f32 {
     match v {
         Yaml::Hash(v) => {
@@ -42,21 +59,4 @@ fn unwrap_value(v: &Yaml) -> f32 {
         }
         _ => 0.,
     }
-}
-
-fn main() -> Result<(), std::io::Error> {
-    let doc = std::fs::read_to_string("finances.yaml")?;
-    let data = YamlLoader::load_from_str(&doc).unwrap();
-    let doc = &data[0];
-
-    let map = doc.as_hash().unwrap();
-
-    for (k, v) in map.iter() {
-        println!("{}: ", k.as_str().unwrap());
-        let sum = unwrap_value(v);
-        println!("== {}", sum);
-        println!();
-    }
-
-    Ok(())
 }
