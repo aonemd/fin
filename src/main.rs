@@ -14,7 +14,7 @@ fn main() -> Result<(), std::io::Error> {
 
     for (k, v) in map.iter() {
         println!("{}: ", k.as_str().unwrap());
-        let sum = unwrap_value(v);
+        let sum = unwrap_values(v);
         println!("== {}", sum);
         println!();
     }
@@ -22,7 +22,7 @@ fn main() -> Result<(), std::io::Error> {
     Ok(())
 }
 
-fn unwrap_value(v: &Yaml) -> f32 {
+fn unwrap_values(v: &Yaml) -> f32 {
     match v {
         Yaml::Hash(v) => {
             let mut sum = 0.;
@@ -38,14 +38,14 @@ fn unwrap_value(v: &Yaml) -> f32 {
                         println!("\t* {}:", k.as_str().unwrap());
                     }
                 }
-                sum += unwrap_value(vv);
+                sum += unwrap_values(vv);
             }
             sum
         }
         Yaml::Array(v) => {
             let mut sub_sum = 0.;
             for h in v.iter() {
-                sub_sum += unwrap_value(h);
+                sub_sum += unwrap_values(h);
             }
             println!("\t= {}", sub_sum);
             sub_sum
