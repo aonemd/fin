@@ -1,8 +1,12 @@
+use std::env;
+
 extern crate yaml_rust;
 use yaml_rust::{Yaml, YamlLoader};
 
 fn main() -> Result<(), std::io::Error> {
-    let doc = std::fs::read_to_string("finances.yaml")?;
+    let fin_file = env::var("FIN_FILE").unwrap_or("finances.yaml".to_string());
+
+    let doc = std::fs::read_to_string(fin_file)?;
     let data = YamlLoader::load_from_str(&doc).unwrap();
     let doc = &data[0];
 
