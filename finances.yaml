@@ -8,6 +8,8 @@
 '2021-02-01':
   apartment:
     - rent: 2750
+  bills:
+    - elctricity: 27
   transportation:
     - uber: 87.69 + 55.36 + 26 + 42 + 42 + 34.92 + 25.76 + 42 + 42
     - bus: 12
